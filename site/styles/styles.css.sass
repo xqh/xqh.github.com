@@ -1,0 +1,394 @@
+$width: 640px
+$width-with-margin: 760px
+$article-width: $width-with-margin * 0.67
+$aside-width: $width-with-margin * 0.33
+$body_padding: 12px
+$font-size: 16px
+$leading: 28px
+$intro-scale: 1.3
+$code_leading: 22px
+$margin: 1.75em // $leading / $font-size
+$col: ($width / 10)
+$padding: 1px
+$border-color: #777
+$border: $border-color 1px dotted
+$color: #333
+$link-color: #e13d87
+$title-color: #197a9f
+$date-color: #777
+$intro-color: $date-color
+$meta-color: #999
+$background: #d2d2d2
+$main-face: Vollkorn
+
+@font-face
+  font-family: 'PixChicago'
+  src: url('../fonts/pixChicago.eot')
+  src: local('â˜º'), url('../fonts/pixChicago.woff') format('woff'), url('../fonts/pixChicago.ttf') format('truetype'), url('../fonts/pixChicago.svg#webfontrJSbkYfV') format('svg')
+
+@mixin radius($rad: 3px)
+  -webkit-border-radius: $rad
+  -moz-border-radius: $rad
+  -o-border-radius: $rad
+  border-radius: $rad
+
+@mixin top-border($color-multiplier: 1)
+  margin-top: -1px
+  border-top: $border
+  border-top-color: $border-color * $color-multiplier
+
+@mixin nesting-border($color-multiplier: 1)
+  @include top-border($color-multiplier)
+  &:first-child, li
+    border-top: none
+    margin-top: 0
+
+@mixin syntax-highlighting
+  span.CodeRay
+    display: block
+  color: #405056
+  span.class
+    color: #A47826
+  span.comment
+    color: #92A0A0
+    font-style: italic
+  span.constant
+    color: #A47826
+  span.function
+    color: #3483C5
+  span.keyword
+    color: #859926
+  span.predefined-constant,
+  span.predefined-type
+    color: #3483C5
+  span.integer
+    color: #D23681
+  span.char,
+  span.string
+    background-color: darken($background, 4%)
+    span.delimiter
+      color: #44A199
+    span.content
+      color: #485A62
+  span.symbol
+    color: #3B8B82
+
+  span.line
+    display: inline-block
+    width: $width
+    body.with-margin &
+      width: $width-with-margin
+  span.line.change
+    background-color: darken($background, 10%)
+  span.line.delete
+    color: #C3C3C3
+    background-color: #D33648
+  span.line.insert
+    color: #E8E8E8
+    background-color: #3D8F7C
+
+*
+  margin: 0
+  padding: 0
+
+body
+  color: black
+  background-color: $background
+  font: #{$font-size}/#{$leading} $main-face, serif
+  padding: $margin $body_padding
+
+strong
+  font-weight: bold
+
+header, nav, article, footer, figure, figcaption
+  display: block
+
+input, textarea, pre, code, dt
+  font: 14px Menlo, Monaco, Consolas, Courier, monospace
+input, textarea
+  font-size: 14px
+input[type=submit]
+  font-family: 'Helvetica Neue', arial, sans-serif
+
+pre
+  white-space: pre-wrap
+  white-space: -moz-pre-wrap
+  white-space: -pre-wrap
+  white-space: -o-pre-wrap
+  word-wrap: break-word
+
+h1, h2, h3, h4, h5
+  color: #333333
+  font-size: 1em
+  margin-bottom: $leading
+
+blockquote
+  margin-left: $leading * 0.1
+  padding-left: $leading * 0.4
+  border-left: lighten($color, 55%) 3px solid
+
+
+img
+  display: block
+  border: solid 1px #777
+  margin: -1px
+  article &
+    max-width: $width
+    body.with-margin &
+      max-width: $width-with-margin
+    clear: both
+    &.lightboxable:hover
+      cursor: pointer
+
+header,
+footer,
+article,
+#home
+  margin: 0 auto
+  width: $width
+  body.with-margin &
+    width: $width-with-margin
+
+ul,
+ol
+  list-style-position: inside
+
+ul
+  li
+    list-style-type: circle
+  &.years li
+    list-style-type: none
+  &.pros, &.cons
+    li
+      list-style-type: none
+      position: relative
+      &:before
+        position: absolute
+        top: 0
+  &.pros li:before
+    content: "✔"
+    left: -20px
+  &.cons li:before
+    content: "✗"
+    left: -16px
+
+article
+  header
+    h1
+      font: 24px/2 PixChicago
+      line-height: 1.9
+      display: inline
+      a
+        padding-left: $padding
+        padding-right: $padding
+    time
+      font: 14px/2 PixChicago
+      color: $date-color
+      padding-left: 1em
+  .body
+    p, ul, ol, pre
+      margin-bottom: $margin
+    p, ul, ol
+      width: $width
+      body.with-margin &
+        width: $article-width
+    p, li, figure
+      color: $color
+    blockquote
+      p
+        color: lighten($color, 25%)
+    aside,
+    aside p
+      color: lighten($color, 25%)
+      &:last-child
+        margin-bottom: 0
+    >pre,
+    >figure
+      clear: both
+    pre
+      code
+        @include syntax-highlighting
+    figure
+      border-top: $border
+      margin-bottom: $margin
+      overflow: hidden
+      body.with-margin &
+        pre,
+        figcaption
+          margin-bottom: 0
+      pre
+        code
+          padding: 0 0.2em
+        body.with-margin &
+          float: left
+      figcaption
+        font-size: 14px
+        line-height: $code_leading
+        body.with-margin &
+          float: right
+          margin-top: 1px
+          clear: none
+    figure figcaption,
+    aside
+      margin-bottom: $margin
+      font-style: italic
+      body.with-margin &
+        font-size: 14px
+        width: $aside-width
+        padding-left: $leading * 2
+        box-sizing: border-box
+        -webkit-box-sizing: border-box
+        -moz-box-sizing: border-box
+        float: right
+        clear: right
+        p
+          width: auto
+        img
+          width: $aside-width - ($leading * 2)
+          margin-top: $leading * 0.3
+          border: none
+          border-radius: 2px
+      code
+        font-size: 13px
+    aside, body.with-margin & aside
+      font-size: 15px
+      line-height: $leading
+
+ul.years
+  li
+    display: block
+    overflow: hidden
+    @include nesting-border
+  ul.months, a.title, span.year, span.month, span.day
+    display: block
+    float: left
+  ul.months
+    width: $width - $col
+    li
+      @include nesting-border
+    ul.posts
+      margin-left: $col
+      padding-left: $padding
+      padding-bottom: $margin
+      a.title
+        float: none
+        margin-left: $col
+        padding-left: $padding
+  span.year, span.month, span.day
+    color: $date-color
+    width: $col - $padding
+    padding-left: $padding
+
+article header h1 a,
+ul.posts li a.title
+  color: $title-color
+  &:hover
+    color: darken($title-color, 5%)
+
+a
+  color: $link-color
+  text-decoration: none
+  &:hover
+    color: darken($link-color, 5%)
+    background-color: darken($background, 5%)
+
+code
+  line-height: $code_leading
+  @include radius
+  p &, li &
+    color: black
+    white-space: nowrap
+    border: #bbb 1px solid
+    padding: 0 0.5ex
+  pre &
+    display: block
+
+code pre
+  background-color: rgba(255,255,255,0.12)
+
+dt
+  float: left
+  padding-right: 1ex
+  line-height: $code_leading
+  font-weight: bold
+
+pre, input[type=text], textarea
+  background-color: transparent
+
+hr
+  border: none
+  clear: both
+
+body >header h2,
+body >header h1,
+article,
+article .body,
+footer,
+#home,
+hr
+  @include top-border
+
+body >header,
+article >header,
+article
+  margin-bottom: $margin * 2
+
+footer,
+#home
+  margin-bottom: $margin
+
+body
+  >header
+    h1, h2
+      margin-bottom: $margin
+    h1
+      font: normal 14px/2 PixChicago
+    h2, nav
+      font: italic #{$font-size * $intro-scale}/#{$leading * $intro-scale} $main-face, serif
+    h2
+      color: $intro-color
+      width: $width - 240px
+      padding-right: 240px
+  &.ben-hoskings >header
+    margin-bottom: $margin * 3
+    h1
+      font: normal 36px/2 PixChicago
+
+body > footer
+  clear: both
+  color: $color
+  span
+    display: block
+    font-size: 0.8em
+    line-height: ($leading / 0.8)
+    padding: 0 $padding
+    &.powered_by
+      float: right
+
+header h1 a,
+code pre
+  padding-left: $padding
+  padding-right: $padding
+
+article
+  h1, h2, h3, h4, h5, p, li, aside
+    padding-left: $padding
+    padding-right: $padding
+
+nav
+  float: right
+  a
+    margin-left: 12px
+    color: $meta-color
+    &:hover
+      color: darken($meta-color, 5%)
+
+.lightbox
+  position: fixed
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+  background-color: rgba(0, 0, 0, 0.7)
+  img
+    position: absolute
